@@ -1,13 +1,12 @@
-import random
+from numpy import random
 
-tiv = random.randint(0, 9)
 
 num = []
 num.append(random.randint(1, 9))
 while len(num) < 4:
-  tiv = random.randint(0, 9)
-  if tiv not in num:
-    num.append(tiv)
+  num1 = random.randint(0, 9)
+  if num1 not in num:
+    num.append(num1)
 
 #print(num)
 c = 0
@@ -48,4 +47,3 @@ while not c == 4:
 
 
 print("Congratulations. You win!!")
-print(num)
