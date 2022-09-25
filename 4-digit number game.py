@@ -1,6 +1,7 @@
 import random
 from utils import is_valid
 
+
 # generating 4 digits for number
 first_digit = random.randint(1, 9)  # generate first digit
 available_digits_list = [i for i in range(10)]
@@ -12,7 +13,6 @@ while len(actual_digits) != 4:
     actual_digits.append(digit)
     available_digits_list.remove(digit)
 
-print(actual_digits)
 
 counter_of_matching_digits = 0
 while counter_of_matching_digits != 4:
@@ -25,6 +25,7 @@ while counter_of_matching_digits != 4:
 
     # validate input number
     while not is_valid(input_number):
+        # handling problems with input errors
         try:
             input_number = eval(input())
         except Exception:
