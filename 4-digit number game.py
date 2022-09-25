@@ -1,43 +1,46 @@
-from numpy import random
+import random
+from utils import is_valid
 
-# generating 4 digit number
-number_list = [random.randint(1, 9)]
-while len(number_list) < 4:
-    number_1 = random.randint(0, 9)
-    if number_1 not in number_list:
-        number_list.append(number_1)
+# generating 4 digits for number
+first_digit = random.randint(1, 9)  # generate first digit
+available_digits_list = [i for i in range(10)]
+available_digits_list.remove(first_digit)
 
-# print(num)
-counter_of_digits = 0
+actual_digits = [first_digit]
+while len(actual_digits) != 4:
+    digit = random.choice(available_digits_list)
+    actual_digits.append(digit)
+    available_digits_list.remove(digit)
 
-while not counter_of_digits == 4:
-    print("input your number: ")
-    x = eval(input())
-    while x // 1000 < 1 or x // 1000 > 9:
-        print("please input 4-digit number")
-        x = eval(input())
+print(actual_digits)
 
-    mynumrev = []
-    for i in range(4):
-        mynumrev.append(x % 10)
-        x = x // 10
+counter_of_matching_digits = 0
+while counter_of_matching_digits != 4:
+    # handling problems with input errors
+    try:
+        input_number = eval(input("input your number: "))
+    except Exception:
+        print("Please input valid number")
+        input_number = eval(input("input your number: "))
 
-    mynum = mynumrev[::-1]
+    # validate input number
+    while not is_valid(input_number):
+        try:
+            input_number = eval(input())
+        except Exception:
+            print("Please input valid number")
+            input_number = eval(input("input your number: "))
 
-    b = 0
-    z = []
-    for i in mynum:
-        if i in number_list:
-            if i in z:
-                continue
-            z.append(i)
-            b += 1
+    input_digits = [int(i) for i in str(input_number)]
 
-    c = 0
-    for i in range(4):
-        if number_list[i] == mynum[i]:
-            c += 1
+    counter_of_digits = 0
+    counter_of_matching_digits = 0
+    for act, pred in zip(actual_digits, input_digits):
+        if pred in actual_digits:
+            counter_of_digits += 1
+        if act == pred:
+            counter_of_matching_digits += 1
 
-    print(str(b) + " : " + str(c))
+    print(f"{counter_of_digits} : {counter_of_matching_digits}")
 
 print("Congratulations. You win!!")
